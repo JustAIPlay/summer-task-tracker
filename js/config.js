@@ -316,45 +316,115 @@ const CONFIG = {
         REWARDS: [
             {
                 id: 1,
-                name: '彩色笔套装',
-                icon: '✏️',
-                price: 8,
-                description: '12色彩色笔，让创作更精彩'
+                name: '露营',
+                icon: '🏕️',
+                price: 250,
+                description: '户外露营体验，与大自然亲密接触'
             },
             {
                 id: 2,
-                name: '小熊玩偶',
-                icon: '🧸',
-                price: 15,
-                description: '可爱的小熊陪伴，温暖每一天'
+                name: '爬山',
+                icon: '🏔️',
+                price: 150,
+                description: '登山挑战，锻炼体魄欣赏美景'
             },
             {
                 id: 3,
-                name: '晚睡30分钟',
-                icon: '🌙',
-                price: 10,
-                description: '特殊权限：今晚可以晚睡30分钟'
+                name: '图书馆、博物馆等',
+                icon: '🏛️',
+                price: 150,
+                description: '文化场所参观，增长见识开阔眼界'
             },
             {
                 id: 4,
-                name: '糖果奖励',
-                icon: '🍭',
-                price: 5,
-                description: '美味糖果一份，甜蜜好心情'
+                name: '英文电影1小时/动画片3集',
+                icon: '🎬',
+                price: 200,
+                description: '观看英文影视作品，娱乐学习两不误'
             },
             {
                 id: 5,
-                name: '游戏时间+1小时',
-                icon: '🎮',
-                price: 12,
-                description: '额外获得1小时游戏时间'
+                name: '电影半小时/动画片2集',
+                icon: '📺',
+                price: 150,
+                description: '适量观看影视内容，放松身心'
             },
             {
                 id: 6,
-                name: '选择今日晚餐',
-                icon: '🍽️',
-                price: 8,
-                description: '今天的晚餐由你来决定'
+                name: '手机益智游戏15分钟',
+                icon: '📱',
+                price: 100,
+                description: '益智游戏时间，锻炼思维能力'
+            },
+            {
+                id: 7,
+                name: '农场体验',
+                icon: '🚜',
+                price: 200,
+                description: '农场生活体验，了解农业知识'
+            },
+            {
+                id: 8,
+                name: '美食犒赏(一顿烧烤/冰淇淋）',
+                icon: '🍖',
+                price: 60,
+                description: '美味食物奖励，享受味蕾盛宴'
+            },
+            {
+                id: 9,
+                name: '超市购物金20￥',
+                icon: '🛒',
+                price: 100,
+                description: '购物资金奖励，自由选择心仪物品'
+            },
+            {
+                id: 10,
+                name: '书籍购物金30￥',
+                icon: '📚',
+                price: 180,
+                description: '图书购买资金，投资知识成长'
+            },
+            {
+                id: 11,
+                name: '市内一日游',
+                icon: '🚌',
+                price: 200,
+                description: '城市探索之旅，发现身边美景'
+            },
+            {
+                id: 12,
+                name: '游乐场畅玩',
+                icon: '🎡',
+                price: 200,
+                description: '游乐场快乐时光，尽情享受童趣'
+            },
+            {
+                id: 13,
+                name: '手工DIY活动',
+                icon: '✂️',
+                price: 250,
+                description: '手工制作体验，培养动手创造能力'
+            },
+            {
+                id: 14,
+                name: '父母免生气券1张',
+                icon: '😊',
+                price: 60,
+                description: '特殊权限券，获得父母的理解包容'
+            },
+            {
+                id: 15,
+                name: '免写1天作业券1张',
+                icon: '📝',
+                price: 300,
+                description: '学习假期券，享受一天无作业时光'
+            },
+            {
+                id: 16,
+                name: '玩水',
+                icon: '💦',
+                price: 250,
+                description: '水上活动体验，清凉夏日乐趣'
             }
         ],
         
