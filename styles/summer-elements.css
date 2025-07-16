@@ -2,50 +2,59 @@
 
 /* 夏日元素容器 */
 .summer-elements-container {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none; /* 确保元素不会干扰用户交互 */
-    z-index: -1; /* 放在内容后面 */
+    z-index: 0; /* 放在内容后面但在背景前面 */
     overflow: hidden;
 }
 
 /* 西瓜元素 */
 .watermelon {
     position: absolute;
-    font-size: 30px;
-    opacity: 0.7;
+    font-size: 24px;
+    opacity: 0.5;
     animation: floatElement 15s linear infinite, fadeInOut 15s ease-in-out infinite;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* 冰淇淋元素 */
 .ice-cream {
     position: absolute;
-    font-size: 25px;
-    opacity: 0.7;
+    font-size: 22px;
+    opacity: 0.5;
     animation: floatElement 18s linear infinite, fadeInOut 18s ease-in-out infinite;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* 太阳元素 */
 .sun {
     position: absolute;
-    font-size: 40px;
-    opacity: 0.5;
+    font-size: 30px;
+    opacity: 0.4;
     animation: rotateSun 30s linear infinite, floatElement 30s linear infinite;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* 椰子树元素 */
 .palm-tree {
     position: absolute;
-    font-size: 35px;
-    opacity: 0.7;
+    font-size: 26px;
+    opacity: 0.5;
     animation: sway 10s ease-in-out infinite;
-    z-index: -1;
+    z-index: 0;
+}
+
+/* 奶茶元素 */
+.bubble-tea {
+    position: absolute;
+    font-size: 22px;
+    opacity: 0.5;
+    animation: floatElement 20s linear infinite, fadeInOut 20s ease-in-out infinite;
+    z-index: 0;
 }
 
 /* 漂浮动画 */
@@ -54,13 +63,13 @@
         transform: translate(0, 0);
     }
     25% {
-        transform: translate(100px, 100px);
+        transform: translate(50px, 50px);
     }
     50% {
-        transform: translate(200px, 0);
+        transform: translate(100px, 0);
     }
     75% {
-        transform: translate(100px, -100px);
+        transform: translate(50px, -50px);
     }
     100% {
         transform: translate(0, 0);
@@ -90,9 +99,9 @@
 /* 淡入淡出动画 */
 @keyframes fadeInOut {
     0%, 100% {
-        opacity: 0.3;
+        opacity: 0.2;
     }
     50% {
-        opacity: 0.7;
+        opacity: 0.5;
     }
 }

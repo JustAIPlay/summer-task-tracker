@@ -1,16 +1,17 @@
 /**
  * 夏日元素生成器
- * 用于在页面背景中添加动态的夏日元素
+ * 用于在任务列表容器中添加动态的夏日元素
  */
 
 class SummerElementsManager {
     constructor() {
         // 夏日元素配置
         this.elements = [
-            { type: 'watermelon', emoji: '🍉', count: 5 },
-            { type: 'ice-cream', emoji: '🍦', count: 4 },
-            { type: 'sun', emoji: '☀️', count: 2 },
-            { type: 'palm-tree', emoji: '🌴', count: 3 }
+            { type: 'watermelon', emoji: '🍉', count: 3 },
+            { type: 'ice-cream', emoji: '🍦', count: 3 },
+            { type: 'bubble-tea', emoji: '🧋', count: 3 },
+            { type: 'sun', emoji: '☀️', count: 1 },
+            { type: 'palm-tree', emoji: '🌴', count: 2 }
         ];
         
         // 创建容器
@@ -41,10 +42,20 @@ class SummerElementsManager {
             return;
         }
         
-        // 创建新容器
+        // 获取任务列表容器
+        const taskList = document.getElementById('taskList');
+        if (!taskList) {
+            console.error('任务列表容器不存在');
+            return;
+        }
+        
+        // 创建新容器并添加到任务列表中
         this.container = document.createElement('div');
         this.container.className = 'summer-elements-container';
-        document.body.appendChild(this.container);
+        taskList.appendChild(this.container);
+        
+        // 确保任务列表有相对定位，以便夏日元素容器可以相对于它定位
+        taskList.style.position = 'relative';
     }
     
     /**
@@ -91,4 +102,19 @@ class SummerElementsManager {
 document.addEventListener('DOMContentLoaded', () => {
     // 创建夏日元素管理器实例
     const summerElements = new SummerElementsManager();
+    
+    // 监听页面切换事件，确保在任务列表页面显示时才显示夏日元素
+    document.querySelectorAll('.nav-item').forEach(navItem => {
+        navItem.addEventListener('click', () => {
+            const targetPage = navItem.getAttribute('data-page');
+            
+            // 如果切换到任务页面，重新生成夏日元素
+            if (targetPage === 'tasks') {
+                // 延迟一点执行，确保任务列表已经显示
+                setTimeout(() => {
+                    summerElements.init();
+                }, 100);
+            }
+        });
+    });
 });
