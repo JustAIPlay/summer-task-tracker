@@ -15,133 +15,133 @@ const CONFIG = {
         {
             id: 1,
             title: '7:00-7:20 起床穿衣刷牙',
-            reward: 10,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 2,
             title: '7:20-8:20 晨练',
-            reward: 10,
+            reward: 3,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 3,
             title: '8:30-9:00 早饭',
-            reward: 5,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 4,
             title: '9:00-9:30 晨读古诗/美文',
-            reward: 5,
+            reward: 3,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 5,
             title: '9:30-11:00 数学暑假作业+思维训练',
-            reward: 10,
+            reward: 8,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 6,
             title: '11:00-11:30 练字',
-            reward: 5,
+            reward: 3,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 7,
             title: '11:30-12:00 午饭',
-            reward: 5,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 8,
             title: '12:00-13:00 自由活动',
-            reward: 5,
+            reward: 0,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 9,
             title: '13:00-14:00 午睡',
-            reward: 5,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 10,
             title: '14:00-14:30 英语作业/阅读',
-            reward: 5,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 11,
             title: '14:30-15:00 计算小达人',
-            reward: 5,
+            reward: 8,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 12,
             title: '15:00-16:00 数学预习',
-            reward: 10,
+            reward: 8,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 13,
             title: '16:00-17:00 运动',
-            reward: 10,
+            reward: 3,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 14,
             title: '17:00-18:30 自由活动',
-            reward: 2,
+            reward: 0,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 15,
             title: '18:30-19:30 晚饭',
-            reward: 5,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 16,
             title: '19:30-20:00 自由活动',
-            reward: 2,
+            reward: 0,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 17,
             title: '20:00-21:00 语文预习',
-            reward: 10,
+            reward: 8,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 18,
             title: '21:00-21:30 阅读',
-            reward: 5,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         },
         {
             id: 19,
             title: '21:30-22:00 洗澡睡觉',
-            reward: 10,
+            reward: 1,
             completed: false,
             createdAt: new Date().toISOString()
         }
@@ -183,7 +183,7 @@ const CONFIG = {
         {
             id: 1,
             title: '手工',
-            reward: 10,
+            reward: 0,
             completed: false,
             icon: '✂️',
             description: '发挥创意，制作手工作品'
@@ -191,7 +191,7 @@ const CONFIG = {
         {
             id: 2,
             title: '厨神挑战',
-            reward: 20,
+            reward: 2,
             completed: false,
             icon: '👨‍🍳',
             description: '学习烹饪，挑战美食制作'
@@ -199,7 +199,7 @@ const CONFIG = {
         {
             id: 3,
             title: '亲子阅读',
-            reward: 10,
+            reward: 0,
             completed: false,
             icon: '📚',
             description: '与家人一起享受阅读时光'
@@ -207,7 +207,7 @@ const CONFIG = {
         {
             id: 4,
             title: '听歌',
-            reward: 5,
+            reward: 0,
             completed: false,
             icon: '🎵',
             description: '欣赏美妙的音乐'
@@ -215,7 +215,7 @@ const CONFIG = {
         {
             id: 5,
             title: '唱歌',
-            reward: 5,
+            reward: 0,
             completed: false,
             icon: '🎤',
             description: '展现歌声，释放心情'
@@ -223,7 +223,7 @@ const CONFIG = {
         {
             id: 6,
             title: '家务挑战',
-            reward: 20,
+            reward: 2,
             completed: false,
             icon: '🧹',
             description: '参与家务，培养责任心'
@@ -231,7 +231,7 @@ const CONFIG = {
         {
             id: 7,
             title: '科学小实验',
-            reward: 10,
+            reward: 1,
             completed: false,
             icon: '🔬',
             description: '探索科学的奥秘'
@@ -239,7 +239,7 @@ const CONFIG = {
         {
             id: 8,
             title: '摘抄挑战',
-            reward: 10,
+            reward: 3,
             completed: false,
             icon: '✍️',
             description: '摘抄优美文字，积累素材'
@@ -247,7 +247,7 @@ const CONFIG = {
         {
             id: 9,
             title: '阅读挑战',
-            reward: 10,
+            reward: 3,
             completed: false,
             icon: '📖',
             description: '沉浸书海，拓展知识'
@@ -255,7 +255,7 @@ const CONFIG = {
         {
             id: 10,
             title: '绘画',
-            reward: 5,
+            reward: 0,
             completed: false,
             icon: '🎨',
             description: '用画笔描绘美好世界'
@@ -263,7 +263,7 @@ const CONFIG = {
         {
             id: 11,
             title: '感统运动挑战',
-            reward: 20,
+            reward: 5,
             completed: false,
             icon: '🤸',
             description: '锻炼身体协调性'
@@ -271,7 +271,7 @@ const CONFIG = {
         {
             id: 12,
             title: '专注力挑战',
-            reward: 20,
+            reward: 5,
             completed: false,
             icon: '🎯',
             description: '提升专注力和注意力'
@@ -279,10 +279,34 @@ const CONFIG = {
         {
             id: 13,
             title: 'AI创作',
-            reward: 20,
+            reward: 1,
             completed: false,
             icon: '🤖',
             description: '利用AI工具进行创作'
+        },
+        {
+            id: 14,
+            title: '休息发呆',
+            reward: 0,
+            completed: false,
+            icon: '😌',
+            description: '放松身心，享受宁静时光'
+        },
+        {
+            id: 15,
+            title: '吃水果挑战',
+            reward: 2,
+            completed: false,
+            icon: '🍎',
+            description: '品尝新鲜水果，补充维生素'
+        },
+        {
+            id: 16,
+            title: '复盘订正错题',
+            reward: 5,
+            completed: false,
+            icon: '📝',
+            description: '回顾错题，巩固知识点'
         }
     ],
     
