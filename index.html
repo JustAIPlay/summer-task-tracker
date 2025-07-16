@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 嘉欢暑假任务打卡</title>
+    <!-- 引入外部CSS样式文件 -->
+    <!-- 拆分后的CSS文件 -->
+    <link rel="stylesheet" href="styles/base.css">
+    <link rel="stylesheet" href="styles/components.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/pages.css">
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="main-container">
+        <!-- 头部区域 -->
+        <header class="header">
+            <h1>🌟 嘉欢的夏天2025</h1>
+            <div class="date-display" id="currentDate">2024年1月15日 星期一</div>
+            
+            <!-- 宝石计数器 -->
+            <div class="gem-counter" id="gemCounter">
+                <span class="gem-icon">💎</span>
+                <span id="gemCount">25</span>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main-content">
+            <!-- 任务列表页面 -->
+            <div class="page-content" id="tasksPage">
+                <!-- 页面标题 -->
+                <div class="tasks-header">
+                    <div class="section-title">
+                        <span class="title-icon">📋</span>
+                        <span class="title-text">日精于勤</span>
+                    </div>
+                    <div class="tasks-subtitle">刻意练习，做时间的朋友！</div>
+                </div>
+                
+                <!-- 任务列表 -->
+                <div class="task-list hidden" id="taskList">
+                    <!-- 任务项将通过JavaScript动态生成 -->
+                </div>
+
+                <!-- 空状态提示 -->
+                <div class="empty-state hidden" id="emptyState">
+                    <div class="icon">🎉</div>
+                    <div class="message">太棒了！</div>
+                    <div class="sub-message">今天的所有任务都完成了！</div>
+                </div>
+
+                <!-- 加载状态 -->
+                <div class="loading" id="loadingState">
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+
+            <!-- 自由放飞页面 -->
+            <div class="page-content hidden" id="freedomPage">
+                <!-- 页面标题 -->
+                <div class="freedom-header">
+                    <div class="section-title">
+                        <span class="title-icon">🎈</span>
+                        <span class="title-text">自由放飞时光</span>
+                    </div>
+                    <div class="freedom-subtitle">选择你喜欢的活动，享受快乐时光！</div>
+                </div>
+                
+                <!-- 自由活动列表 -->
+                <div class="freedom-list" id="freedomList">
+                    <!-- 活动项将通过JavaScript动态生成 -->
+                </div>
+                
+                <!-- 空状态提示 -->
+                <div class="empty-state hidden" id="freedomEmptyState">
+                    <div class="icon">🎉</div>
+                    <div class="message">太棒了！</div>
+                    <div class="sub-message">今天的所有自由活动都完成了！</div>
+                </div>
+            </div>
+
+            <!-- 商店页面 -->
+            <div class="page-content hidden" id="shopPage">
+                <!-- 指定奖品区域 -->
+                <div class="shop-section">
+                    <div class="section-title">
+                        <span class="title-icon">🎁</span>
+                        <span class="title-text">指定奖品</span>
+                    </div>
+                    <div class="reward-grid" id="rewardGrid">
+                        <!-- 奖品项将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 神秘盲盒区域 -->
+                <div class="shop-section">
+                    <div class="section-title">
+                        <span class="title-icon">🎲</span>
+                        <span class="title-text">神秘盲盒</span>
+                    </div>
+                    <div class="mystery-grid" id="mysteryGrid">
+                        <!-- 盲盒项将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 底部导航栏 -->
+        <nav class="nav-bar">
+            <div class="nav-item active" data-page="tasks">
+                <span class="icon">📋</span>
+                <span>日精于勤</span>
+            </div>
+            <div class="nav-item" data-page="freedom">
+                <span class="icon">🎈</span>
+                <span>自由放飞</span>
+            </div>
+            <div class="nav-item" data-page="shop">
+                <span class="icon">🛒</span>
+                <span>劳有所得</span>
+            </div>
+            <div class="nav-item" data-page="achievements" style="display: none;">
+                <span class="icon">🏆</span>
+                <span>成就</span>
+            </div>
+            <div class="nav-item" data-page="settings" style="display: none;">
+                <span class="icon">⚙️</span>
+                <span>设置</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 引入外部JavaScript脚本文件 -->
+    <!-- 拆分后的JS文件 -->
+    <script src="js/config.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/freedom.js"></script>
+    <script src="js/shop.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童任务打卡系统 - 原型图</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .prototype-section {
+            margin-bottom: 50px;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .prototype-title {
+            font-size: 1.8em;
+            color: #FF69B4;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 3px solid #FFB6C1;
+            padding-bottom: 10px;
+        }
+
+        .phone-frame {
+            width: 350px;
+            height: 600px;
+            border: 8px solid #333;
+            border-radius: 25px;
+            margin: 20px auto;
+            background: #fff;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 17px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 通用组件样式 */
+        .header {
+            background: linear-gradient(135deg, #FF69B4, #FFB6C1);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+
+        .gem-counter {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.2);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        .nav-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #ddd;
+        }
+
+        .nav-item {
+            text-align: center;
+            font-size: 0.8em;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .nav-item.active {
+            color: #FF69B4;
+            font-weight: bold;
+        }
+
+        /* 主页面样式 */
+        .task-list {
+            padding: 20px 15px;
+            height: calc(100% - 120px);
+            overflow-y: auto;
+        }
+
+        .task-item {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .task-reward {
+            color: #FF69B4;
+            font-size: 0.9em;
+        }
+
+        .check-btn {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #FF69B4;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5em;
+            color: #FF69B4;
+        }
+
+        .check-btn.completed {
+            background: #FF69B4;
+            color: white;
+        }
+
+        /* 商店页面样式 */
+        .shop-content {
+            padding: 15px;
+            height: calc(100% - 120px);
+            overflow-y: auto;
+        }
+
+        .shop-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #FF69B4;
+        }
+
+        .reward-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .reward-item {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .reward-icon {
+            width: 40px;
+            height: 40px;
+            background: #FFB6C1;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .reward-name {
+            font-size: 0.9em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .reward-price {
+            color: #FF69B4;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+
+        .mystery-box {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: white;
+            border: none;
+        }
+
+        /* 成就页面样式 */
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            padding: 20px 15px;
+            height: calc(100% - 120px);
+            overflow-y: auto;
+        }
+
+        .badge-item {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 15px;
+            padding: 20px 10px;
+            text-align: center;
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .badge-item.earned {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-color: #FFD700;
+            color: white;
+        }
+
+        .badge-icon {
+            width: 40px;
+            height: 40px;
+            background: #ddd;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+
+        .badge-item.earned .badge-icon {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .badge-name {
+            font-size: 0.8em;
+            text-align: center;
+        }
+
+        /* 设置页面样式 */
+        .settings-content {
+            padding: 20px 15px;
+            height: calc(100% - 120px);
+            overflow-y: auto;
+        }
+
+        .setting-group {
+            margin-bottom: 25px;
+        }
+
+        .setting-item {
+            background: #f8f9fa;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .setting-label {
+            color: #333;
+            font-weight: bold;
+        }
+
+        .setting-control {
+            width: 60px;
+            height: 30px;
+            background: #ddd;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .setting-control.active {
+            background: #FF69B4;
+        }
+
+        .task-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .add-task-btn {
+            width: 100%;
+            padding: 12px;
+            background: #FF69B4;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            margin-top: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .description {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .feature-list li:before {
+            content: "✨";
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌟 儿童任务打卡系统 - 原型图设计</h1>
+        
+        <!-- 主页面原型 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">📋 主页面 - 任务打卡界面</h2>
+            <div class="description">
+                <h3>页面功能说明：</h3>
+                <ul class="feature-list">
+                    <li>显示今日任务列表，每个任务都有清晰的标题和奖励说明</li>
+                    <li>大大的圆形打卡按钮，点击后有动画效果</li>
+                    <li>顶部显示当前宝石数量，实时更新</li>
+                    <li>底部导航栏，方便切换到其他页面</li>
+                    <li>任务完成后按钮变色，给予即时反馈</li>
+                </ul>
+            </div>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="header">
+                        <h3>今日任务</h3>
+                        <div class="gem-counter">💎 25</div>
+                    </div>
+                    <div class="task-list">
+                        <div class="task-item">
+                            <div class="task-info">
+                                <div class="task-title">📚 完成数学作业</div>
+                                <div class="task-reward">奖励：2颗红宝石</div>
+                            </div>
+                            <div class="check-btn">✓</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-info">
+                                <div class="task-title">🧹 整理房间</div>
+                                <div class="task-reward">奖励：1颗蓝宝石</div>
+                            </div>
+                            <div class="check-btn completed">✓</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-info">
+                                <div class="task-title">🥛 喝8杯水</div>
+                                <div class="task-reward">奖励：1颗绿宝石</div>
+                            </div>
+                            <div class="check-btn">✓</div>
+                        </div>
+                        <div class="task-item">
+                            <div class="task-info">
+                                <div class="task-title">🏃‍♀️ 运动30分钟</div>
+                                <div class="task-reward">奖励：3颗紫水晶</div>
+                            </div>
+                            <div class="check-btn">✓</div>
+                        </div>
+                    </div>
+                    <div class="nav-bar">
+                        <div class="nav-item active">📋<br>任务</div>
+                        <div class="nav-item">🛒<br>商店</div>
+                        <div class="nav-item">🏆<br>成就</div>
+                        <div class="nav-item">⚙️<br>设置</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 商店页面原型 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">🛒 商店页面 - 奖品兑换</h2>
+            <div class="description">
+                <h3>页面功能说明：</h3>
+                <ul class="feature-list">
+                    <li>分为指定奖品区和盲盒区两个部分</li>
+                    <li>指定奖品包括文具、玩具、特殊权限等</li>
+                    <li>盲盒有不同等级，价格和奖品价值不同</li>
+                    <li>每个商品显示所需宝石数量</li>
+                    <li>点击商品可以兑换，宝石不足时会提示</li>
+                </ul>
+            </div>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="header">
+                        <h3>奖品商店</h3>
+                        <div class="gem-counter">💎 25</div>
+                    </div>
+                    <div class="shop-content">
+                        <div class="shop-section">
+                            <div class="section-title">🎁 指定奖品</div>
+                            <div class="reward-grid">
+                                <div class="reward-item">
+                                    <div class="reward-icon">✏️</div>
+                                    <div class="reward-name">彩色笔套装</div>
+                                    <div class="reward-price">💎 8</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-icon">🧸</div>
+                                    <div class="reward-name">小熊玩偶</div>
+                                    <div class="reward-price">💎 15</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-icon">🌙</div>
+                                    <div class="reward-name">晚睡30分钟</div>
+                                    <div class="reward-price">💎 10</div>
+                                </div>
+                                <div class="reward-item">
+                                    <div class="reward-icon">🍭</div>
+                                    <div class="reward-name">糖果奖励</div>
+                                    <div class="reward-price">💎 5</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shop-section">
+                            <div class="section-title">🎲 神秘盲盒</div>
+                            <div class="reward-grid">
+                                <div class="reward-item mystery-box">
+                                    <div class="reward-icon">📦</div>
+                                    <div class="reward-name">小盲盒</div>
+                                    <div class="reward-price">💎 8</div>
+                                </div>
+                                <div class="reward-item mystery-box">
+                                    <div class="reward-icon">🎁</div>
+                                    <div class="reward-name">大盲盒</div>
+                                    <div class="reward-price">💎 15</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-bar">
+                        <div class="nav-item">📋<br>任务</div>
+                        <div class="nav-item active">🛒<br>商店</div>
+                        <div class="nav-item">🏆<br>成就</div>
+                        <div class="nav-item">⚙️<br>设置</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成就页面原型 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">🏆 成就页面 - 徽章展示</h2>
+            <div class="description">
+                <h3>页面功能说明：</h3>
+                <ul class="feature-list">
+                    <li>网格布局展示所有可获得的徽章</li>
+                    <li>已获得的徽章彩色显示，未获得的灰色显示</li>
+                    <li>包括打卡天数、任务完成、宝石收集等不同类型徽章</li>
+                    <li>点击徽章可以查看获得条件和进度</li>
+                    <li>增加成就感和持续动力</li>
+                </ul>
+            </div>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="header">
+                        <h3>我的成就</h3>
+                        <div class="gem-counter">💎 25</div>
+                    </div>
+                    <div class="achievement-grid">
+                        <div class="badge-item earned">
+                            <div class="badge-icon">🔥</div>
+                            <div class="badge-name">连续打卡<br>7天</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon">⭐</div>
+                            <div class="badge-name">连续打卡<br>30天</div>
+                        </div>
+                        <div class="badge-item earned">
+                            <div class="badge-icon">💎</div>
+                            <div class="badge-name">收集宝石<br>50颗</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon">👑</div>
+                            <div class="badge-name">收集宝石<br>100颗</div>
+                        </div>
+                        <div class="badge-item earned">
+                            <div class="badge-icon">📚</div>
+                            <div class="badge-name">学习达人</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon">🏃‍♀️</div>
+                            <div class="badge-name">运动健将</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon">🧹</div>
+                            <div class="badge-name">整理小能手</div>
+                        </div>
+                        <div class="badge-item earned">
+                            <div class="badge-icon">🌟</div>
+                            <div class="badge-name">新手上路</div>
+                        </div>
+                        <div class="badge-item">
+                            <div class="badge-icon">🎯</div>
+                            <div class="badge-name">完美一周</div>
+                        </div>
+                    </div>
+                    <div class="nav-bar">
+                        <div class="nav-item">📋<br>任务</div>
+                        <div class="nav-item">🛒<br>商店</div>
+                        <div class="nav-item active">🏆<br>成就</div>
+                        <div class="nav-item">⚙️<br>设置</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 设置页面原型 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">⚙️ 设置页面 - 任务管理</h2>
+            <div class="description">
+                <h3>页面功能说明：</h3>
+                <ul class="feature-list">
+                    <li>可以添加、编辑、删除自定义任务</li>
+                    <li>设置任务的奖励宝石数量</li>
+                    <li>开启/关闭提醒功能</li>
+                    <li>调整音效和动画设置</li>
+                    <li>查看使用统计和数据备份</li>
+                </ul>
+            </div>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <div class="header">
+                        <h3>设置</h3>
+                        <div class="gem-counter">💎 25</div>
+                    </div>
+                    <div class="settings-content">
+                        <div class="setting-group">
+                            <div class="section-title">🔔 通知设置</div>
+                            <div class="setting-item">
+                                <div class="setting-label">任务提醒</div>
+                                <div class="setting-control active"></div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-label">音效开关</div>
+                                <div class="setting-control active"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <div class="section-title">📝 任务管理</div>
+                            <div class="setting-item">
+                                <div style="width: 100%;">
+                                    <div class="setting-label">添加新任务</div>
+                                    <input type="text" class="task-input" placeholder="输入任务名称...">
+                                    <button class="add-task-btn">+ 添加任务</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-group">
+                            <div class="section-title">📊 数据统计</div>
+                            <div class="setting-item">
+                                <div class="setting-label">总完成任务</div>
+                                <div style="color: #FF69B4; font-weight: bold;">156个</div>
+                            </div>
+                            <div class="setting-item">
+                                <div class="setting-label">累计获得宝石</div>
+                                <div style="color: #FF69B4; font-weight: bold;">342颗</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-bar">
+                        <div class="nav-item">📋<br>任务</div>
+                        <div class="nav-item">🛒<br>商店</div>
+                        <div class="nav-item">🏆<br>成就</div>
+                        <div class="nav-item active">⚙️<br>设置</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 总结说明 -->
+        <div class="prototype-section">
+            <h2 class="prototype-title">📋 设计总结</h2>
+            <div class="description">
+                <h3>整体设计特点：</h3>
+                <ul class="feature-list">
+                    <li><strong>色彩方案</strong>：采用粉色系为主色调，符合10岁女孩的喜好</li>
+                    <li><strong>界面风格</strong>：圆角设计，可爱图标，营造温馨友好的氛围</li>
+                    <li><strong>交互设计</strong>：大按钮易点击，清晰的视觉反馈</li>
+                    <li><strong>功能布局</strong>：简洁明了，核心功能突出</li>
+                    <li><strong>激励机制</strong>：宝石奖励+徽章成就双重激励</li>
+                </ul>
+                
+                <h3>用户体验考虑：</h3>
+                <ul class="feature-list">
+                    <li>操作简单直观，适合儿童使用</li>
+                    <li>即时反馈，增强成就感</li>
+                    <li>游戏化元素，提高趣味性</li>
+                    <li>家长可参与任务设置，确保教育意义</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
