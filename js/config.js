@@ -434,7 +434,7 @@ const CONFIG = {
                 id: 101,
                 name: '小盲盒',
                 icon: '📦',
-                price: 8,
+                price: 100,
                 description: '神秘小礼品，惊喜等你开启',
                 rewards: [
                     { name: '贴纸一套', probability: 0.3 },
@@ -448,7 +448,7 @@ const CONFIG = {
                 id: 102,
                 name: '大盲盒',
                 icon: '🎁',
-                price: 15,
+                price: 200,
                 description: '超值大礼包，更多惊喜等着你',
                 rewards: [
                     { name: '精美文具套装', probability: 0.2 },
