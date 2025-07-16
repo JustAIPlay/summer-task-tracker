@@ -437,11 +437,18 @@ const CONFIG = {
                 price: 100,
                 description: '神秘小礼品，惊喜等你开启',
                 rewards: [
-                    { name: '贴纸一套', probability: 0.3 },
-                    { name: '小玩具', probability: 0.25 },
-                    { name: '糖果', probability: 0.25 },
-                    { name: '彩色笔', probability: 0.15 },
-                    { name: '特殊奖励', probability: 0.05 }
+                    { name: '美食犒赏(一顿烧烤/冰淇淋）', probability: 0.08 },
+                    { name: '父母免生气券1张', probability: 0.07 },
+                    { name: '手机益智游戏15分钟', probability: 0.15 },
+                    { name: '超市购物金20￥', probability: 0.08 },
+                    { name: '盲盒抽奖1次', probability: 0.05 },
+                    { name: '爬山', probability: 0.07 },
+                    { name: '图书馆、博物馆等', probability: 0.08 },
+                    { name: '电影半小时/动画片2集', probability: 0.12 },
+                    { name: '书籍购物金30￥', probability: 0.06 },
+                    { name: '父母的一个拥抱', probability: 0.10 },
+                    { name: '爸爸面对面20分钟', probability: 0.07 },
+                    { name: '父母免催券一张', probability: 0.07 }
                 ]
             },
             {
