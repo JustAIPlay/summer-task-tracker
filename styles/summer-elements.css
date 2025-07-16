@@ -1,0 +1,98 @@
+/* ==================== 夏日元素动画 ==================== */
+
+/* 夏日元素容器 */
+.summer-elements-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* 确保元素不会干扰用户交互 */
+    z-index: -1; /* 放在内容后面 */
+    overflow: hidden;
+}
+
+/* 西瓜元素 */
+.watermelon {
+    position: absolute;
+    font-size: 30px;
+    opacity: 0.7;
+    animation: floatElement 15s linear infinite, fadeInOut 15s ease-in-out infinite;
+    z-index: -1;
+}
+
+/* 冰淇淋元素 */
+.ice-cream {
+    position: absolute;
+    font-size: 25px;
+    opacity: 0.7;
+    animation: floatElement 18s linear infinite, fadeInOut 18s ease-in-out infinite;
+    z-index: -1;
+}
+
+/* 太阳元素 */
+.sun {
+    position: absolute;
+    font-size: 40px;
+    opacity: 0.5;
+    animation: rotateSun 30s linear infinite, floatElement 30s linear infinite;
+    z-index: -1;
+}
+
+/* 椰子树元素 */
+.palm-tree {
+    position: absolute;
+    font-size: 35px;
+    opacity: 0.7;
+    animation: sway 10s ease-in-out infinite;
+    z-index: -1;
+}
+
+/* 漂浮动画 */
+@keyframes floatElement {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(100px, 100px);
+    }
+    50% {
+        transform: translate(200px, 0);
+    }
+    75% {
+        transform: translate(100px, -100px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* 太阳旋转动画 */
+@keyframes rotateSun {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* 椰子树摇摆动画 */
+@keyframes sway {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+/* 淡入淡出动画 */
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
