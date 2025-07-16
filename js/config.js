@@ -458,12 +458,17 @@ const CONFIG = {
                 price: 200,
                 description: '超值大礼包，更多惊喜等着你',
                 rewards: [
-                    { name: '精美文具套装', probability: 0.2 },
-                    { name: '益智玩具', probability: 0.2 },
-                    { name: '图书一本', probability: 0.2 },
-                    { name: '手工材料包', probability: 0.2 },
-                    { name: '超级大奖', probability: 0.1 },
-                    { name: '双倍宝石', probability: 0.1 }
+                    { name: '英文电影1小时/动画片3集', probability: 0.15 },
+                    { name: '农场体验', probability: 0.08 },
+                    { name: '市内一日游', probability: 0.07 },
+                    { name: '游乐场畅玩', probability: 0.08 },
+                    { name: '露营', probability: 0.07 },
+                    { name: '手工DIY活动', probability: 0.10 },
+                    { name: '玩水', probability: 0.10 },
+                    { name: '免写1天作业券1张', probability: 0.12 },
+                    { name: '父母的一个拥抱', probability: 0.09 },
+                    { name: '爸爸面对面20分钟', probability: 0.07 },
+                    { name: '父母免催券一张', probability: 0.07 }
                 ]
             }
         ]
