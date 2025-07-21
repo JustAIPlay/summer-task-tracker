@@ -25,8 +25,59 @@ class FreedomManager {
      */
     init() {
         this.loadActivities();
+        this.checkDailyReset();
         this.renderActivities();
         console.log('自由放飞管理器初始化完成');
+    }
+
+    /**
+     * 检查每日重置
+     */
+    checkDailyReset() {
+        const today = new Date().toDateString();
+        const lastActiveDate = this.getLastActiveDate();
+        
+        if (lastActiveDate !== today) {
+            // 新的一天，重置活动状态
+            this.resetDailyActivities();
+            this.setLastActiveDate(today);
+            
+            // 显示每日重置提示
+            if (window.uiManager && window.uiManager.showFreedomDailyResetNotification) {
+                setTimeout(() => {
+                    window.uiManager.showFreedomDailyResetNotification();
+                }, 1000); // 延迟1秒显示，确保页面加载完成
+            }
+        }
+    }
+
+    /**
+     * 获取最后活跃日期
+     * @returns {string} 最后活跃日期
+     */
+    getLastActiveDate() {
+        // 统一使用dataManager中的用户数据来获取最后活跃日期
+        if (window.dataManager && window.dataManager.getUserData) {
+            const userData = window.dataManager.getUserData();
+            return userData.lastActiveDate || '';
+        }
+        // 兼容性处理：如果dataManager不可用，使用本地存储
+        return localStorage.getItem('freedomLastActiveDate') || '';
+    }
+
+    /**
+     * 设置最后活跃日期
+     * @param {string} date - 日期字符串
+     */
+    setLastActiveDate(date) {
+        // 统一使用dataManager来设置最后活跃日期
+        if (window.dataManager && window.dataManager.getUserData) {
+            const userData = window.dataManager.getUserData();
+            userData.lastActiveDate = date;
+            window.dataManager.saveData();
+        }
+        // 兼容性处理：同时更新本地存储
+        localStorage.setItem('freedomLastActiveDate', date);
     }
 
     /**

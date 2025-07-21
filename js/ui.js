@@ -239,6 +239,48 @@ class UIManager {
     }
 
     /**
+     * 显示自由放飞页面每日重置提示
+     */
+    showFreedomDailyResetNotification() {
+        const notification = document.createElement('div');
+        notification.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 15px;
+                font-size: 1em;
+                font-weight: 500;
+                z-index: 1000;
+                animation: slideInDown 0.5s ease-out;
+                box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+                text-align: center;
+                min-width: 280px;
+            ">
+                <div style="margin-bottom: 5px; font-size: 1.1em;">🎮 自由放飞新的一天！</div>
+                <div style="font-size: 0.9em; opacity: 0.9;">活动状态已重置，开始新的挑战吧</div>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (document.body.contains(notification)) {
+                notification.style.animation = 'slideOutUp 0.5s ease-in';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 500);
+            }
+        }, 3000);
+    }
+
+    /**
      * 创建宝石飞行动画
      * @param {HTMLElement} sourceElement - 源元素
      */
@@ -372,6 +414,11 @@ class UIManager {
             tasksPage.classList.remove('hidden');
         }
         
+        // 重新检查日期重置
+        if (window.dataManager) {
+            dataManager.checkDailyReset();
+        }
+        
         // 检查是否需要显示空状态
         const tasks = dataManager.getTasks();
         if (tasks.length === 0) {
@@ -402,8 +449,11 @@ class UIManager {
         const freedomPage = document.getElementById('freedomPage');
         if (freedomPage) {
             freedomPage.classList.remove('hidden');
-            // 渲染自由放飞内容
+            // 重新检查日期重置并渲染自由放飞内容
             if (window.freedomManager) {
+                // 重新检查日期重置
+                freedomManager.checkDailyReset();
+                // 渲染自由放飞内容
                 freedomManager.renderActivities();
             }
         }
