@@ -53,7 +53,8 @@ class FreedomManager {
         // 清空现有内容
         this.domElements.freedomList.innerHTML = '';
 
-        if (this.activities.length === 0) {
+        const activities = this.getActivities();
+        if (activities.length === 0) {
             this.showEmptyState();
             return;
         }
@@ -61,7 +62,6 @@ class FreedomManager {
         this.hideEmptyState();
 
         // 渲染每个活动
-        const activities = this.getActivities();
         activities.forEach(activity => {
             const activityElement = this.createActivityElement(activity);
             this.domElements.freedomList.appendChild(activityElement);

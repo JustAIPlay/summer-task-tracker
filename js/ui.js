@@ -452,7 +452,7 @@ class UIManager {
             // 重新检查日期重置并渲染自由放飞内容
             if (window.freedomManager) {
                 // 重新检查日期重置
-                freedomManager.checkDailyReset();
+                dataManager.checkDailyReset();
                 // 渲染自由放飞内容
                 freedomManager.renderActivities();
             }
