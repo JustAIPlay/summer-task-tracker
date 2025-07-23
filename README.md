@@ -130,6 +130,9 @@ python -m http.server 8080
 http://localhost:8080/index.html
 ```
 
+### Vercel 部署
+项目包含 `vercel.json` 配置文件，用于指导 Vercel 平台的部署工作。该文件定义了构建规则和路由重写，确保所有静态资源（HTML, CSS, JS）都能被正确托管和访问，解决了在 Vercel 环境下可能出现的 404 Not Found 问题。
+
 ### 自定义配置
 编辑 `js/config.js` 文件可以修改：
 - 默认任务列表
@@ -151,7 +154,11 @@ location.reload();
 
 ## 更新日志
 
-### v1.6.0 (最新版本)
+### v1.7.0 (最新版本)
+- 🐞 **修复初始化错误**：解决了在“自由放飞”页面因数据未正确加载导致的 `undefined is not an object` 错误，以及因函数调用错误导致的 `freedomManager.checkDailyReset is not a function` 问题。
+- 🚀 **修复部署问题**：添加 `vercel.json` 配置文件，明确了 Vercel 的构建和路由规则，解决了静态资源 404 Not Found 的问题，确保应用在 Vercel 平台顺利部署和运行。
+
+### v1.6.0
 - ✨ **统一数据管理**：重构数据管理系统，将“业精于勤”和“自由放飞”页面的数据统一由 `js/data.js` 管理。
 - 🔄 **优化重置逻辑**：实现统一的每日任务状态重置功能，确保新的一天所有任务和活动状态都能正确刷新。
 - 🔧 **代码结构优化**：移除 `js/freedom.js` 中冗余的数据处理逻辑，代码更清晰、更易于维护。
