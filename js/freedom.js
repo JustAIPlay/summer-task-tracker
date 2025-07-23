@@ -5,7 +5,9 @@
  */
 class FreedomManager {
     constructor() {
-        this.activities = [];
+        this.dataManager = null;
+        this.uiManager = null;
+        this.animationManager = null;
         this.domElements = {};
         this.initDOMElements();
     }
@@ -24,95 +26,22 @@ class FreedomManager {
      * 初始化自由放飞管理器
      */
     init() {
-        this.loadActivities();
-        this.checkDailyReset();
+        this.dataManager = window.dataManager;
+        this.uiManager = window.uiManager;
+        this.animationManager = window.animationManager;
+
         this.renderActivities();
         console.log('自由放飞管理器初始化完成');
     }
 
-    /**
-     * 检查每日重置
-     */
-    checkDailyReset() {
-        const today = new Date().toDateString();
-        const lastActiveDate = this.getLastActiveDate();
-        
-        if (lastActiveDate !== today) {
-            // 新的一天，重置活动状态
-            this.resetDailyActivities();
-            this.setLastActiveDate(today);
-            
-            // 显示每日重置提示
-            if (window.uiManager && window.uiManager.showFreedomDailyResetNotification) {
-                setTimeout(() => {
-                    window.uiManager.showFreedomDailyResetNotification();
-                }, 1000); // 延迟1秒显示，确保页面加载完成
-            }
-        }
-    }
 
-    /**
-     * 获取最后活跃日期
-     * @returns {string} 最后活跃日期
-     */
-    getLastActiveDate() {
-        // 统一使用dataManager中的用户数据来获取最后活跃日期
-        if (window.dataManager && window.dataManager.getUserData) {
-            const userData = window.dataManager.getUserData();
-            return userData.lastActiveDate || '';
-        }
-        // 兼容性处理：如果dataManager不可用，使用本地存储
-        return localStorage.getItem('freedomLastActiveDate') || '';
-    }
-
-    /**
-     * 设置最后活跃日期
-     * @param {string} date - 日期字符串
-     */
-    setLastActiveDate(date) {
-        // 统一使用dataManager来设置最后活跃日期
-        if (window.dataManager && window.dataManager.getUserData) {
-            const userData = window.dataManager.getUserData();
-            userData.lastActiveDate = date;
-            window.dataManager.saveData();
-        }
-        // 兼容性处理：同时更新本地存储
-        localStorage.setItem('freedomLastActiveDate', date);
-    }
-
-    /**
-     * 加载活动数据
-     */
-    loadActivities() {
-        // 从本地存储加载活动数据
-        const savedActivities = localStorage.getItem('freedomActivities');
-        
-        if (savedActivities) {
-            this.activities = JSON.parse(savedActivities);
-        } else {
-            // 使用默认配置
-            this.activities = CONFIG.FREEDOM_ACTIVITIES.map(activity => ({
-                ...activity,
-                completed: false,
-                createdAt: new Date().toISOString()
-            }));
-            this.saveActivities();
-        }
-    }
-
-    /**
-     * 保存活动数据到本地存储
-     */
-    saveActivities() {
-        localStorage.setItem('freedomActivities', JSON.stringify(this.activities));
-    }
 
     /**
      * 获取所有活动
      * @returns {Array} 活动数组
      */
     getActivities() {
-        return this.activities;
+        return this.dataManager.getFreedomActivities();
     }
 
     /**
@@ -132,7 +61,8 @@ class FreedomManager {
         this.hideEmptyState();
 
         // 渲染每个活动
-        this.activities.forEach(activity => {
+        const activities = this.getActivities();
+        activities.forEach(activity => {
             const activityElement = this.createActivityElement(activity);
             this.domElements.freedomList.appendChild(activityElement);
         });
@@ -174,7 +104,8 @@ class FreedomManager {
      * @param {number} activityId - 活动ID
      */
     toggleActivity(activityId) {
-        const activity = this.activities.find(a => a.id === activityId);
+        const activities = this.getActivities();
+        const activity = activities.find(a => a.id === activityId);
         if (!activity) return;
 
         const wasCompleted = activity.completed;
@@ -183,18 +114,16 @@ class FreedomManager {
         // 更新显示
         this.updateActivityDisplay(activityId, activity.completed);
 
-        // 处理宝石奖励
-        if (activity.completed && !wasCompleted) {
-            // 完成活动，获得宝石
-            this.handleActivityCompletion(activity);
-        } else if (!activity.completed && wasCompleted) {
-            // 取消完成，扣除宝石
-            this.handleActivityCancellation(activity);
-        }
+        // 更新数据
+        this.dataManager.updateFreedomActivityStatus(activityId, activity.completed);
 
-        // 保存数据
-        this.saveActivities();
-        dataManager.saveData();
+        // 更新宝石总数显示
+        this.uiManager.updateGemCount(this.dataManager.getUserData().gems);
+
+        // 播放动画
+        if (activity.completed) {
+            this.handleActivityCompletion(activity);
+        }
 
         // 检查是否所有活动都完成了
         this.checkAllActivitiesCompleted();
@@ -224,58 +153,34 @@ class FreedomManager {
     }
 
     /**
-     * 处理活动完成
+     * 处理活动完成的动画和通知
      * @param {Object} activity - 活动对象
      */
     handleActivityCompletion(activity) {
-        // 添加宝石
-        dataManager.addGems(activity.reward);
-        
-        // 更新宝石显示
-        uiManager.updateGemCount(dataManager.getUserData().gems);
-        
-        // 显示奖励通知
         const activityElement = document.querySelector(`[data-activity-id="${activity.id}"]`);
         if (activityElement) {
-            uiManager.showRewardNotification(activity.reward, activityElement);
-            
-            // 创建宝石飞行动画
-            uiManager.createGemFlyAnimation(activityElement);
-            
-            // 播放完成动画
-            if (window.animationManager) {
-                animationManager.playCheckSuccessAnimation(activityElement.querySelector('.freedom-check-btn'));
+            this.uiManager.showRewardNotification(activity.reward, activityElement);
+            this.uiManager.createGemFlyAnimation(activityElement);
+            if (this.animationManager) {
+                this.animationManager.playCheckSuccessAnimation(activityElement.querySelector('.freedom-check-btn'));
             }
         }
-    }
-
-    /**
-     * 处理活动取消完成
-     * @param {Object} activity - 活动对象
-     */
-    handleActivityCancellation(activity) {
-        // 扣除宝石
-        dataManager.spendGems(activity.reward);
-        
-        // 更新宝石显示
-        uiManager.updateGemCount(dataManager.getUserData().gems);
     }
 
     /**
      * 检查是否所有活动都完成了
      */
     checkAllActivitiesCompleted() {
-        const allCompleted = this.activities.every(activity => activity.completed);
-        
-        if (allCompleted && this.activities.length > 0) {
+        const activities = this.getActivities();
+        const allCompleted = activities.length > 0 && activities.every(activity => activity.completed);
+
+        if (allCompleted) {
             this.showEmptyState();
-            
-            // 播放庆祝动画
-            setTimeout(() => {
-                if (window.animationManager) {
-                    animationManager.playCelebrationAnimation();
-                }
-            }, CONFIG.ANIMATIONS.CELEBRATION_DELAY);
+            if (this.animationManager) {
+                setTimeout(() => {
+                    this.animationManager.playCelebrationAnimation();
+                }, CONFIG.ANIMATIONS.CELEBRATION_DELAY);
+            }
         } else {
             this.hideEmptyState();
         }
@@ -309,14 +214,9 @@ class FreedomManager {
      * 重置所有活动
      */
     resetAllActivities() {
-        this.activities.forEach(activity => {
-            activity.completed = false;
-        });
-        
-        this.saveActivities();
+        this.dataManager.resetDailyData(); // 调用统一的重置方法
         this.renderActivities();
-        
-        console.log('所有自由活动已重置');
+        console.log('所有自由活动已通过 DataManager 重置');
     }
 
     /**
@@ -324,12 +224,13 @@ class FreedomManager {
      * @returns {Object} 统计信息
      */
     getActivityStats() {
-        const total = this.activities.length;
-        const completed = this.activities.filter(activity => activity.completed).length;
-        const totalReward = this.activities.reduce((sum, activity) => {
+        const activities = this.getActivities();
+        const total = activities.length;
+        const completed = activities.filter(activity => activity.completed).length;
+        const totalReward = activities.reduce((sum, activity) => {
             return sum + (activity.completed ? activity.reward : 0);
         }, 0);
-        
+
         return {
             total,
             completed,
@@ -339,21 +240,7 @@ class FreedomManager {
         };
     }
 
-    /**
-     * 每日重置活动状态
-     */
-    resetDailyActivities() {
-        this.activities.forEach(activity => {
-            if (activity.completed) {
-                activity.completed = false;
-            }
-        });
-        
-        this.saveActivities();
-        this.renderActivities();
-        
-        console.log('自由活动每日状态已重置');
-    }
+
 }
 
 // 创建全局自由放飞管理实例

@@ -7,7 +7,8 @@ const CONFIG = {
     // 存储键名
     STORAGE_KEYS: {
         TASKS: 'taskAppTasks',
-        USER_DATA: 'taskAppUserData'
+        USER_DATA: 'taskAppUserData',
+        FREEDOM_ACTIVITIES: 'taskAppFreedomActivities' // 新增
     },
     
     // 默认任务数据

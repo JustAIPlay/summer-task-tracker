@@ -6,6 +6,7 @@
 class DataManager {
     constructor() {
         this.tasksData = [];
+        this.freedomActivitiesData = []; // 新增：自由放飞活动数据
         this.userData = {};
     }
 
@@ -15,11 +16,16 @@ class DataManager {
     initData() {
         this.loadData();
         
-        // 检查是否需要更新任务列表（如果任务数量不匹配，说明配置已更新）
+        // 检查是否需要更新任务列表
         if (this.tasksData.length === 0 || this.tasksData.length !== CONFIG.DEFAULT_TASKS.length) {
             console.log('检测到任务配置更新，重置为新的默认任务');
             this.tasksData = [...CONFIG.DEFAULT_TASKS];
-            this.saveData();
+        }
+
+        // 新增：检查是否需要更新自由放飞活动列表
+        if (this.freedomActivitiesData.length === 0 || this.freedomActivitiesData.length !== CONFIG.FREEDOM_ACTIVITIES.length) {
+            console.log('检测到自由放飞活动配置更新，重置为新的默认活动');
+            this.freedomActivitiesData = CONFIG.FREEDOM_ACTIVITIES.map(activity => ({ ...activity, completed: false }));
         }
         
         if (Object.keys(this.userData).length === 0) {
@@ -37,39 +43,37 @@ class DataManager {
         const today = new Date().toDateString();
         const lastActiveDate = this.userData.lastActiveDate;
         
-        // 如果不是同一天，重置任务状态但保留宝石
+        // 如果不是同一天，重置所有每日状态
         if (lastActiveDate !== today) {
-            console.log('检测到新的一天，重置任务状态');
-            this.resetDailyTasks();
+            console.log('检测到新的一天，重置所有每日状态');
+            this.resetDailyData();
             this.userData.lastActiveDate = today;
             this.saveData();
-            
+
             // 显示每日重置提示
             if (window.uiManager && typeof window.uiManager.showDailyResetNotification === 'function') {
                 setTimeout(() => {
                     window.uiManager.showDailyResetNotification();
-                }, 1000); // 延迟1秒显示，确保页面加载完成
+                }, 1000);
             }
         }
     }
 
     /**
-     * 重置每日任务状态（保留宝石）
+     * 重置所有每日数据（任务和自由活动）
      */
-    resetDailyTasks() {
-        let completedTasksCount = 0;
-        
+    resetDailyData() {
+        // 重置任务
         this.tasksData.forEach(task => {
-            if (task.completed) {
-                task.completed = false;
-                completedTasksCount++;
-            }
+            task.completed = false;
         });
-        
-        // 重置今日完成任务数，但保留总完成数和宝石
-        this.userData.totalTasksCompleted = Math.max(0, this.userData.totalTasksCompleted - completedTasksCount);
-        
-        console.log(`已重置 ${completedTasksCount} 个任务状态，保留宝石数量: ${this.userData.gems}`);
+
+        // 新增：重置自由放飞活动
+        this.freedomActivitiesData.forEach(activity => {
+            activity.completed = false;
+        });
+
+        console.log('已重置所有每日任务和活动的状态。');
     }
 
     /**
@@ -79,6 +83,8 @@ class DataManager {
         try {
             localStorage.setItem(CONFIG.STORAGE_KEYS.TASKS, JSON.stringify(this.tasksData));
             localStorage.setItem(CONFIG.STORAGE_KEYS.USER_DATA, JSON.stringify(this.userData));
+            // 新增：保存自由放飞活动数据
+            localStorage.setItem(CONFIG.STORAGE_KEYS.FREEDOM_ACTIVITIES, JSON.stringify(this.freedomActivitiesData));
             console.log('数据已保存');
         } catch (error) {
             console.error('保存数据失败:', error);
@@ -92,20 +98,27 @@ class DataManager {
         try {
             const savedTasks = localStorage.getItem(CONFIG.STORAGE_KEYS.TASKS);
             const savedUserData = localStorage.getItem(CONFIG.STORAGE_KEYS.USER_DATA);
-            
+            // 新增：加载自由放飞活动数据
+            const savedFreedomActivities = localStorage.getItem(CONFIG.STORAGE_KEYS.FREEDOM_ACTIVITIES);
+
             if (savedTasks) {
                 this.tasksData = JSON.parse(savedTasks);
             }
-            
+
             if (savedUserData) {
                 this.userData = JSON.parse(savedUserData);
             }
-            
+
+            // 新增：解析自由放飞活动数据
+            if (savedFreedomActivities) {
+                this.freedomActivitiesData = JSON.parse(savedFreedomActivities);
+            }
+
             console.log('数据已加载');
         } catch (error) {
             console.error('加载数据失败:', error);
-            // 如果加载失败，使用默认数据
             this.tasksData = [...CONFIG.DEFAULT_TASKS];
+            this.freedomActivitiesData = CONFIG.FREEDOM_ACTIVITIES.map(activity => ({ ...activity, completed: false }));
             this.userData = { ...CONFIG.DEFAULT_USER_DATA };
         }
     }
@@ -124,6 +137,37 @@ class DataManager {
      */
     getUserData() {
         return this.userData;
+    }
+
+    // ==================== 自由放飞活动数据方法 ====================
+
+    /**
+     * 获取自由放飞活动数据
+     * @returns {Array} 活动数组
+     */
+    getFreedomActivities() {
+        return this.freedomActivitiesData;
+    }
+
+    /**
+     * 更新自由放飞活动状态
+     * @param {number} activityId - 活动ID
+     * @param {boolean} completed - 完成状态
+     */
+    updateFreedomActivityStatus(activityId, completed) {
+        const activity = this.freedomActivitiesData.find(a => a.id === activityId);
+        if (activity) {
+            const wasCompleted = activity.completed;
+            activity.completed = completed;
+
+            if (completed && !wasCompleted) {
+                this.addGems(activity.reward);
+            } else if (!completed && wasCompleted) {
+                this.spendGems(activity.reward);
+            }
+
+            this.saveData();
+        }
     }
 
     /**
@@ -197,6 +241,29 @@ class DataManager {
      */
     areAllTasksCompleted() {
         return this.tasksData.length > 0 && this.tasksData.every(task => task.completed);
+    }
+
+    /**
+     * 增加宝石
+     * @param {number} amount - 增加的数量
+     */
+    addGems(amount) {
+        this.userData.gems += amount;
+        this.saveData();
+    }
+
+    /**
+     * 花费宝石
+     * @param {number} amount - 花费的数量
+     * @returns {boolean} 是否成功
+     */
+    spendGems(amount) {
+        if (this.userData.gems >= amount) {
+            this.userData.gems -= amount;
+            this.saveData();
+            return true;
+        }
+        return false;
     }
 
     /**

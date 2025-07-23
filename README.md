@@ -31,7 +31,7 @@ test/
 ├── index.html              # 主页面（包含任务、自由放飞、商店三个页面）
 ├── js/                      # JavaScript 文件
 │   ├── config.js           # 应用配置
-│   ├── data.js             # 数据管理
+│   ├── data.js             # 统一数据管理（任务、活动、宝石等）
 │   ├── ui.js               # 用户界面（含日期自动更新功能）
 │   ├── tasks.js            # 任务管理
 │   ├── animations.js       # 动画效果
@@ -145,10 +145,17 @@ http://localhost:8080/index.html
 ```javascript
 localStorage.removeItem('taskAppTasks');
 localStorage.removeItem('taskAppUserData');
+localStorage.removeItem('freedomActivitiesData');
 location.reload();
 ```
 
 ## 更新日志
+
+### v1.6.0 (最新版本)
+- ✨ **统一数据管理**：重构数据管理系统，将“业精于勤”和“自由放飞”页面的数据统一由 `js/data.js` 管理。
+- 🔄 **优化重置逻辑**：实现统一的每日任务状态重置功能，确保新的一天所有任务和活动状态都能正确刷新。
+- 🔧 **代码结构优化**：移除 `js/freedom.js` 中冗余的数据处理逻辑，代码更清晰、更易于维护。
+- 💎 **宝石数据同步**：确保宝石数量在所有页面之间正确同步，不受每日重置影响。
 
 ### v1.5.0 (当前版本)
 - 🎁 更新小盲盒和大盲盒奖品列表，增加更多有吸引力的奖励
